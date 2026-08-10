@@ -1,38 +1,48 @@
 "use client";
 
 import { TrashBin } from "@gravity-ui/icons";
-import {AlertDialog, Button} from "@heroui/react";
+import { AlertDialog, Button } from "@heroui/react";
 import { redirect } from "next/navigation";
 
-export function DeleteAlert({destination}) {
-    const {destinationName,_id} = destination;
+export function DeleteAlert({ destination }) {
+  const { destinationName, _id } = destination;
 
-    const handleDelete = async()=>{
-        const res = await fetch(`http://localhost:5001/destination/${_id}`,{
-            method: 'DELETE',
-            headers: {
-                'content-type':'application/json',
-            }
-        })
-        const data = await res.json()
-        redirect('/destinations')
-        console.log(data);
-    }
+  const handleDelete = async () => {
+    const { data: tokenData } = await authClient.token();
+    console.log(tokenData);
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/destination/${_id}`,
+      {
+        method: "DELETE",
+        headers: {
+          "content-type": "application/json",
+          authorization: `Bearer ${tokenData?.token}`,
+        },
+      },
+    );
+    const data = await res.json();
+    redirect("/destinations");
+  };
   return (
     <AlertDialog>
-      <Button className={'text-red-500 rounded-none'} variant="outline"> <TrashBin></TrashBin> Delete</Button>
+      <Button className={"text-red-500 rounded-none"} variant="outline">
+        {" "}
+        <TrashBin></TrashBin> Delete
+      </Button>
       <AlertDialog.Backdrop>
         <AlertDialog.Container>
           <AlertDialog.Dialog className="sm:max-w-100">
             <AlertDialog.CloseTrigger />
             <AlertDialog.Header>
               <AlertDialog.Icon status="danger" />
-              <AlertDialog.Heading>Delete Destination permanently?</AlertDialog.Heading>
+              <AlertDialog.Heading>
+                Delete Destination permanently?
+              </AlertDialog.Heading>
             </AlertDialog.Header>
             <AlertDialog.Body>
               <p>
-                This will permanently delete <strong>{destinationName}</strong> and all of its
-                data. This action cannot be undone.
+                This will permanently delete <strong>{destinationName}</strong>{" "}
+                and all of its data. This action cannot be undone.
               </p>
             </AlertDialog.Body>
             <AlertDialog.Footer>
@@ -40,7 +50,7 @@ export function DeleteAlert({destination}) {
                 Cancel
               </Button>
               <Button onClick={handleDelete} slot="close" variant="danger">
-                Delete 
+                Delete
               </Button>
             </AlertDialog.Footer>
           </AlertDialog.Dialog>
