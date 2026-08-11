@@ -16,18 +16,19 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="flex items-center justify-between bg-pink-300 p-5 mb-10">
+    <div className="bg-pink-300 py-3">
+      <nav className="flex items-center justify-between max-w-7xl mx-auto">
       <ul className="flex gap-3">
-        <li>
+        <li className="hover:bg-white p-1 rounded-2xl">
           <Link href={"/"}>Home</Link>
         </li>
-        <li>
+        <li className="hover:bg-white p-1 rounded-2xl">
           <Link href={"/destinations"}>Destinations</Link>
         </li>
-        <li>
+        <li className="hover:bg-white p-1 rounded-2xl">
           <Link href={"/my-bookings"}>My Bookings</Link>
         </li>
-        <li>
+        <li className="hover:bg-white p-1 rounded-2xl">
           <Link href={"/add-destination"}>Add Destination</Link>
         </li>
       </ul>
@@ -40,7 +41,7 @@ const Navbar = () => {
           height={150}></Image>
       </div>
       <ul className="flex items-center gap-3">
-        <li>
+        <li className="hover:bg-white p-1 rounded-2xl">
           <Link href={"/profile"}>Profile</Link>
         </li>
        {user ? <>
@@ -51,18 +52,19 @@ const Navbar = () => {
             </Avatar>
         </li>
         <li>
-            <Button variant="danger" onClick={handleSignOut} className={"rounded-none"}>Logout</Button>
+            <Button size="sm" variant="danger" onClick={handleSignOut} className={"rounded-none"}>Logout</Button>
         </li>
        </> : <>
-        <li>
+        <li className="hover:bg-white p-1 rounded-2xl">
           <Link href={"/login"}>Login</Link>
         </li>
-        <li>
+        <li className="hover:bg-white p-1 rounded-2xl">
           <Link href={"/signup"}>Sign Up</Link>
         </li>
         </>}
       </ul>
     </nav>
+    </div>
   );
 };
 
